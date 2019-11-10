@@ -10,5 +10,5 @@ for fn in files:
     data = data.split() 
     for i in range(len(data)):
         data[i] = float(data[i])
-    f.write("lattice point density "+str(data[0]/data[1])+"\\\\")
+    f.write(" "+str(data[0]/data[1]))
     f.close()

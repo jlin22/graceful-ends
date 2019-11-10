@@ -1,3 +1,5 @@
+from fractions import Fraction
+
 class Vertex:
     value = 0
 
@@ -79,6 +81,7 @@ def write_end_vecs(end_vectors, f, math=True):
                 f.write("\n")
 
 
+# filename.'density': card(graceful_ends) card(permutations) decimal fraction
 def get_graceful_data(dict, filename, math=False, debug=False):
     graph = construct_graph(dict)
     end_vectors = find_graceful(graph, debug=debug)
@@ -91,13 +94,37 @@ def get_graceful_data(dict, filename, math=False, debug=False):
     write_end_vecs(end_vectors, f, math=False)
     f.close()
     f = open(filename + 'density', 'w')
-    f.write("number graceful ends: "+str(len(end_vectors))+"\\\\number permutations: "+str(fact(len(graph)))+\
-            "="+str(len(graph))+"!\\\\permutation density: "+str(find_perm_density(end_vectors, graph))+"\\\\")
+    f.write(str(len(end_vectors))+" "+str(fact(len(graph)))+" "+\
+            str(find_perm_density(end_vectors, graph))+" "+\
+            str(Fraction(len(end_vectors), fact(len(graph)))))
     f.close()
     f = open(filename+'poly', 'w')
     write_end_vecs(end_vectors, f, math=False)
     f.close()
 
+def generate_n_1_1_dicts(n):
+    dicts = [] 
+    for i in range(2, n+1):
+        d = {0: [1, 2, 3],
+                1: [0],
+                2: [0],
+                3: [0]}
+        if n != 1:
+            d[3].append(4)
+        for i in range(4, n+2):
+            d[i] = [i-1, i+1]
+        d[n+2] = [n+2-1]
+        dicts.append(d)
+    return dicts
+
+def graceful_n_1_1(n):
+    dicts = generate_n_1_1_dicts(n)
+    i = 1
+    for d in dicts:
+        get_graceful_data(d, str(i)+"-1-1")
+        i += 1
+
+graceful_n_1_1(7)
 
 def run_on_graphs():
     dict = {0: [1, 2, 3], 1: [0], 2: [0], 3: [0]}
