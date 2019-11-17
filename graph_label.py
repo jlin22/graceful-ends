@@ -124,7 +124,7 @@ def graceful_n_1_1(n):
         get_graceful_data(d, str(i)+"-1-1")
         i += 1
 
-graceful_n_1_1(7)
+graceful_n_1_1(20)
 
 def run_on_graphs():
     dict = {0: [1, 2, 3], 1: [0], 2: [0], 3: [0]}
