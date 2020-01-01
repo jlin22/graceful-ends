@@ -55,8 +55,33 @@ def find_graceful(graph, ends=True, debug=False):
                 for i in range(len(graph)):
                     string += str(i) + " : " + str(graph[i][0].value) + ", "
                 print(string)
-
     return end_vectors
+
+def recursive_graceful(graph):
+    end_vectors = []
+    return end_vectors
+        
+def helper(graph, vertex_num, used_labels, edge_differences):
+    n_edges = len(graph) - 1
+    if len(edge_differences) == edges:
+        return graph
+    else:
+        for i in range(1, len(graph)+1):
+            if i not in used_labels:
+                graph[vertex_num][0].value = i
+                inc_vertices = graph[vertex_num][1]
+                for vertex in inc_vertices:
+                    diff = abs(i - vertex.value)
+                    if diff not in edge_differences:
+                        edge_differences[diff] = 1
+                    elif edge_differences[diff] == 2:
+                        pass
+                    else: 
+                        edge_differences[diff] += 1
+                return helper(graph, vertex_num + 1,  
+            else:
+                pass
+                
 
 def fact(n):
     temp = 1
@@ -102,29 +127,24 @@ def get_graceful_data(dict, filename, math=False, debug=False):
     write_end_vecs(end_vectors, f, math=False)
     f.close()
 
-def generate_n_1_1_dicts(n):
-    dicts = [] 
+def generate_n_1_1_dict(n):
+    d = {0: [1, 2, 3],
+            1: [0],
+            2: [0],
+            3: [0]}
     for i in range(2, n+1):
-        d = {0: [1, 2, 3],
-                1: [0],
-                2: [0],
-                3: [0]}
         if n != 1:
             d[3].append(4)
         for i in range(4, n+2):
             d[i] = [i-1, i+1]
         d[n+2] = [n+2-1]
-        dicts.append(d)
-    return dicts
+    return d
 
 def graceful_n_1_1(n):
-    dicts = generate_n_1_1_dicts(n)
-    i = 1
-    for d in dicts:
-        get_graceful_data(d, str(i)+"-1-1")
-        i += 1
+    d = generate_n_1_1_dict(n)
+    get_graceful_data(d, str(n)+"-1-1")
 
-graceful_n_1_1(20)
+graceful_n_1_1(7)
 
 def run_on_graphs():
     dict = {0: [1, 2, 3], 1: [0], 2: [0], 3: [0]}
@@ -187,7 +207,7 @@ def run_on_graphs():
             4: [3, 5], 5: [4], 6: [0, 7], 7: [6, 8], 8: [7]}
     get_graceful_data(dict, '3-3-2')
 
-run_on_graphs()
+#run_on_graphs()
 
 files = ['1-1-1', '2-1-1', '3-1-1', '2-2-1', '4-1-1', '3-2-1', '2-2-2', '5-1-1',
          '4-2-1', '3-3-1', '3-2-2', '6-1-1', '5-2-1', '4-3-1', '4-2-2', '3-3-2']

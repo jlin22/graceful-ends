@@ -1,0 +1,287 @@
+\documentclass{article}
+              \usepackage{amsmath, amsfonts, amssymb, tikz}
+              \usepackage[margin=0.5in]{geometry}
+              \usepackage{float}              \title{Graceful Ends}
+              \allowdisplaybreaks{}
+              \begin{document}
+\paragraph{} Here, the density is computed by the number of             graceful ends divided by the number of permutations on the             values of the vertices
+\begin{center}
+              \begin{tabular}{| l | l | l |}
+              \hline
+              Tree & Density Decimal & Density Fraction \\ 
+              \hline 
+1-1-1 & 0.5 & 1/2\\
+\hline
+2-1-1 & 0.08333333333333333 & 1/12\\
+\hline
+3-1-1 & 0.016666666666666666 & 1/60\\
+\hline
+2-2-1 & 0.022222222222222223 & 1/45\\
+\hline
+4-1-1 & 0.00873015873015873 & 11/1260\\
+\hline
+3-2-1 & 0.006349206349206349 & 2/315\\
+\hline
+2-2-2 & 0.007142857142857143 & 1/140\\
+\hline
+5-1-1 & 0.0020833333333333333 & 1/480\\
+\hline
+4-2-1 & 0.0019345238095238096 & 13/6720\\
+\hline
+3-3-1 & 0.0017857142857142857 & 1/560\\
+\hline
+3-2-2 & 0.001884920634920635 & 19/10080\\
+\hline
+6-1-1 & 0.00032517636684303354 & 59/181440\\
+\hline
+5-2-1 & 0.0003527336860670194 & 1/2835\\
+\hline
+4-3-1 & 0.0003802910052910053 & 23/60480\\
+\hline
+4-2-2 & 0.00033068783068783067 & 1/3024\\
+\hline
+3-3-2 & 0.00036926807760141094 & 67/181440\\
+\hline
+\hline
+              \end{tabular}
+              \end{center}\paragraph{} This table shows how many graceful labelings             a particular tree has
+\begin{center}
+              \begin{tabular}{| l | l | l |}
+              \hline
+              Tree & Graceful Ends \\ 
+              \hline
+1-1-1 & 12\\
+\hline
+2-1-1 & 10\\
+\hline
+3-1-1 & 12\\
+\hline
+2-2-1 & 16\\
+\hline
+4-1-1 & 44\\
+\hline
+3-2-1 & 32\\
+\hline
+2-2-2 & 36\\
+\hline
+5-1-1 & 84\\
+\hline
+4-2-1 & 78\\
+\hline
+3-3-1 & 72\\
+\hline
+3-2-2 & 76\\
+\hline
+6-1-1 & 118\\
+\hline
+5-2-1 & 128\\
+\hline
+4-3-1 & 138\\
+\hline
+4-2-2 & 120\\
+\hline
+3-3-2 & 134\\
+\hline
+\hline
+              \end{tabular}
+              \end{center}\paragraph{} This table shows how many lattice points are in             the convex hull of the set of graceful ends
+\begin{center}
+              \begin{tabular}{| l | l | l |}
+              \hline
+              Tree & Lattice Points \\ 
+              \hline
+1-1-1 & 20\\
+\hline
+2-1-1 & 23\\
+\hline
+3-1-1 & 48\\
+\hline
+2-2-1 & 50\\
+\hline
+4-1-1 & 131\\
+\hline
+3-2-1 & 113\\
+\hline
+2-2-2 & 105\\
+\hline
+5-1-1 & 192\\
+\hline
+4-2-1 & 182\\
+\hline
+3-3-1 & 198\\
+\hline
+3-2-2 & 214\\
+\hline
+6-1-1 & 263\\
+\hline
+5-2-1 & 265\\
+\hline
+4-3-1 & 319\\
+\hline
+4-2-2 & 309\\
+\hline
+3-3-2 & 351\\
+\hline
+\hline
+              \end{tabular}
+              \end{center}\paragraph{} This table shows the ratio of graceful ends to             lattice points
+\begin{center}
+              \begin{tabular}{| l | l |}
+              \hline
+              Tree & Graceful Ends / Lattice Points \\ 
+              \hline
+1-1-1 & 3/5                 \\ 
+\hline
+2-1-1 & 10/23                 \\ 
+\hline
+3-1-1 & 1/4                 \\ 
+\hline
+2-2-1 & 8/25                 \\ 
+\hline
+4-1-1 & 44/131                 \\ 
+\hline
+3-2-1 & 32/113                 \\ 
+\hline
+2-2-2 & 12/35                 \\ 
+\hline
+5-1-1 & 7/16                 \\ 
+\hline
+4-2-1 & 3/7                 \\ 
+\hline
+3-3-1 & 4/11                 \\ 
+\hline
+3-2-2 & 38/107                 \\ 
+\hline
+6-1-1 & 118/263                 \\ 
+\hline
+5-2-1 & 128/265                 \\ 
+\hline
+4-3-1 & 138/319                 \\ 
+\hline
+4-2-2 & 40/103                 \\ 
+\hline
+3-3-2 & 134/351                 \\ 
+\hline
+\hline
+              \end{tabular}
+              \end{center}\paragraph{} This table gives the coefficients of the Ehrhart     polynomial from greatest power to least power
+\begin{center}
+              \begin{tabular}{| l | l |}
+              \hline
+              Tree & Ehrhart\\ 
+              \hline 
+1-1-1 & ['1', '4', '6', '9']\\ 
+\hline
+2-1-1 & ['1', '14/3', '4', '40/3']\\ 
+\hline
+3-1-1 & ['1', '14/3', '8', '103/3']\\ 
+\hline
+2-2-1 & ['1', '6', '14', '29']\\ 
+\hline
+4-1-1 & ['1', '22/3', '32', '272/3']\\ 
+\hline
+3-2-1 & ['1', '7', '22', '83']\\ 
+\hline
+2-2-2 & ['1', '8', '24', '72']\\ 
+\hline
+5-1-1 & ['1', '5', '29', '157']\\ 
+\hline
+4-2-1 & ['1', '10', '25', '146']\\ 
+\hline
+3-3-1 & ['1', '23/3', '28', '484/3']\\ 
+\hline
+3-2-2 & ['1', '9', '38', '166']\\ 
+\hline
+6-1-1 & ['1', '20/3', '34', '664/3']\\ 
+\hline
+5-2-1 & ['1', '13/3', '38', '665/3']\\ 
+\hline
+4-3-1 & ['1', '23/3', '50', '781/3']\\ 
+\hline
+4-2-2 & ['1', '9', '43', '256']\\ 
+\hline
+3-3-2 & ['1', '12', '66', '272']\\ 
+\hline
+\hline
+              \end{tabular}
+              \end{center}\begin{figure}[H]
+	\center
+	\input{1-1-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 1-1-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{2-1-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 2-1-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{3-1-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 3-1-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{2-2-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 2-2-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{4-1-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 4-1-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{3-2-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 3-2-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{2-2-2.tikz}
+                \caption{Convex hull for the graceful ends of the tree 2-2-2}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{5-1-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 5-1-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{4-2-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 4-2-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{3-3-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 3-3-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{3-2-2.tikz}
+                \caption{Convex hull for the graceful ends of the tree 3-2-2}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{6-1-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 6-1-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{5-2-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 5-2-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{4-3-1.tikz}
+                \caption{Convex hull for the graceful ends of the tree 4-3-1}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{4-2-2.tikz}
+                \caption{Convex hull for the graceful ends of the tree 4-2-2}
+\end{figure}
+\begin{figure}[H]
+	\center
+	\input{3-3-2.tikz}
+                \caption{Convex hull for the graceful ends of the tree 3-3-2}
+\end{figure}
+\end{document}

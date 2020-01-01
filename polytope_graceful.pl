@@ -1,7 +1,8 @@
 use application "polytope";
 
 my @files = ("1-1-1", "2-1-1", "3-1-1", "2-2-1", "4-1-1", "3-2-1", "2-2-2", 
-"5-1-1", "4-2-1", "3-3-1", "3-2-2", "6-1-1", "5-2-1", "4-3-1", "4-2-2", "3-3-2");
+"5-1-1", "4-2-1", "3-3-1", "3-2-2", "6-1-1", "5-2-1", "4-3-1", "4-2-2", "3-3-2",
+, "7-1-1", "8-1-1");
 
 foreach my $file (@files) {
     open(INPUT, "< ".$file."poly");
@@ -23,6 +24,9 @@ foreach my $file (@files) {
     close $fh;
     open($fh, '>', $file."temp");
     print $fh $p->N_LATTICE_POINTS." ".$n_graceful_ends;
+    close $fh;
+    open($fh, '>', $file.".ehrhart");
+    print $fh $p->EHRHART_POLYNOMIAL_COEFF;
     close $fh;
     tikz($p->VISUAL, File=>$file);
 }

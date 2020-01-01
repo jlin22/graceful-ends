@@ -1,10 +1,21 @@
-f = open("all_graceful_ends.tex", 'w')
+import sys
+from fractions import Fraction
+
+f = open(sys.argv[1], 'w')
+n_1_1 = ['1-1-1', '2-1-1', '3-1-1', '4-1-1', '5-1-1', '6-1-1', '7-1-1', '8-1-1']
+#all_files = ['1-1-1', '2-1-1', '3-1-1', '2-2-1', '4-1-1', '3-2-1', '2-2-2', '5-1-1',\
+#        '4-2-1', '3-3-1', '3-2-2', '6-1-1', '5-2-1', '4-3-1', '4-2-2', '3-3-2']
+#f = open("all_graceful_ends.tex", 'w')
+files = n_1_1
+
 
 def create_header(f):
     f.write("\\documentclass{article}\n \
              \\usepackage{amsmath, amsfonts, amssymb, tikz}\n \
              \\usepackage[margin=0.5in]{geometry}\n \
+             \\usepackage{float} \
              \\title{Graceful Ends}\n \
+             \\allowdisplaybreaks{}\n \
              \\begin{document}\n")
 
 def make_density_table(files):
@@ -14,10 +25,12 @@ def make_density_table(files):
     f.write("\\begin{center}\n \
              \\begin{tabular}{| l | l | l |}\n \
              \\hline\n \
-             Tree & Density Dec & Density Frac \\\\ \n")
+             Tree & Density Decimal & Density Fraction \\\\ \n \
+             \\hline \n")
     for fn in files:
         string = open(fn+"density", 'r').read().split()
         f.write(fn+" & "+str(string[2])+" & "+str(string[3])+"\\\\\n")
+        f.write("\\hline\n")
     f.write("\\hline\n \
              \\end{tabular}\n \
              \\end{center}")
@@ -28,10 +41,12 @@ def make_graceful_ends_table(files):
     f.write("\\begin{center}\n \
              \\begin{tabular}{| l | l | l |}\n \
              \\hline\n \
-             Tree & Graceful Ends \\\\ \n")
+             Tree & Graceful Ends \\\\ \n \
+             \\hline\n")
     for fn in files:
         string = open(fn+"density", 'r').read().split()
         f.write(fn+" & "+str(string[0])+"\\\\\n")
+        f.write("\\hline\n")
     f.write("\\hline\n \
              \\end{tabular}\n \
              \\end{center}")
@@ -42,29 +57,74 @@ def make_lattice_points_table(files):
     f.write("\\begin{center}\n \
              \\begin{tabular}{| l | l | l |}\n \
              \\hline\n \
-             Tree & Lattice Points \\\\ \n")
+             Tree & Lattice Points \\\\ \n \
+             \\hline\n")
     for fn in files:
         n_lattice_points = open(fn+"points", 'r').read().split()
         f.write(fn+" & "+str(n_lattice_points[0])+"\\\\\n")
+        f.write("\\hline\n")
     f.write("\\hline\n \
              \\end{tabular}\n \
              \\end{center}")
 
-files = ['1-1-1', '2-1-1', '3-1-1', '2-2-1', '4-1-1', '3-2-1', '2-2-2', '5-1-1',\
-        '4-2-1', '3-3-1', '3-2-2', '6-1-1', '5-2-1', '4-3-1', '4-2-2', '3-3-2']
+def make_gr_ends_lat_pts_table(files):
+    f.write("\\paragraph{} This table shows the ratio of graceful ends to \
+            lattice points\n")
+    f.write("\\begin{center}\n \
+             \\begin{tabular}{| l | l | l |}\n \
+             \\hline\n \
+             Tree & Graceful Ends / Lattice Points (Fractional) & Decimal\\\\ \n \
+             \\hline\n")
+    for fn in files:
+        n_lattice_points = int(open(fn+"points", 'r').read().split()[0])
+        n_graceful_ends = int(open(fn+"density", 'r').read().split()[0])
+        f.write(fn+" & "+str(Fraction(n_graceful_ends, n_lattice_points))+" \
+                & " + '%0.4f' % (float(n_graceful_ends)/ n_lattice_points) + "\\\\ \n")
+        f.write("\\hline\n")
+    f.write("\\hline\n \
+             \\end{tabular}\n \
+             \\end{center}")
+    
+
+def make_ehrhart_table(files):
+    f.write("\\paragraph{} This table gives the coefficients of the Ehrhart \
+    polynomial starting at the constant coefficient\n")
+    f.write("\\begin{center}\n \
+             \\begin{tabular}{| l | l |}\n \
+             \\hline\n \
+             Tree & Ehrhart\\\\ \n \
+             \\hline \n")
+    for fn in files:
+        ehrhart = open(fn+".ehrhart", 'r').read().split()
+        f.write(fn+" & "+str(ehrhart)+"\\\\ \n")
+        f.write("\\hline\n")
+    f.write("\\hline\n \
+             \\end{tabular}\n \
+             \\end{center}")
+
+def include_convex_hull(files):
+    for fn in files:
+        f.write("\\begin{figure}[H]\n\t\\center\n\t\input{"+fn+".tikz"+"}\n\
+                \\caption{Convex hull for the graceful ends of the tree "+fn+"}\n\\end{figure}\n")
 
 create_header(f)
 make_density_table(files)
 make_graceful_ends_table(files)
 make_lattice_points_table(files)
+make_gr_ends_lat_pts_table(files)
+make_ehrhart_table(files)
+include_convex_hull(files)
+f.write("\\end{document}")
+f.close()
 
-for fn in files:
-    f.write("\\section{"+fn+"}\n")
-    f.write("\\paragraph{Lattice Points}\mbox{}\\\\\n")
-    lattice_pts = open(fn+"points", 'r')
-    f.write(lattice_pts.read())
-    f.write("\\begin{figure}\n\t\\center\n\t\input{"+fn+".tikz"+"}\n\
-            \\caption{Convex hull for the graceful ends of the tree "+fn+"}\n\\end{figure}\n")
+'''
+f1 = open("n-1-1.tex", 'w')
+n_1_1_files = ['1-1-1', '2-1-1', '3-1-1', '4-1-1', '5-1-1', '6-1-1']
+write_key_info(f1, n_1_1_files)
+'''
+
+'''
+for fn in all_files:
     lattice_pts.close()
     f.write("\\paragraph{Facets of the convex hull "+fn+"}\\\n")
     f.write("\\begin{align*}")
@@ -96,6 +156,5 @@ for fn in files:
             final += " = 0"
             f.write(final + "\\\\")
     f.write("\\end{align*}")
+'''
 
-f.write("\\end{document}")
-f.close()
